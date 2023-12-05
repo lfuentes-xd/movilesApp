@@ -3,6 +3,7 @@ import 'second_view.dart';
 import 'third_view.dart';
 import 'login.dart';
 import 'Register.dart';
+import 'user.dart';
 
 void main() => runApp(const MyApp());
 
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
         '/third': (context) => ThirdView(),
         '/login': (context) => LoginView(),
         '/Register': (context) => RegisterView(),
+        '/user': (context) => user()
       },
     );
   }
@@ -126,6 +128,15 @@ class HomeView extends StatelessWidget {
                 Navigator.pop(context); // Cierra el Drawer
                 Navigator.pushNamed(
                     context, '/login'); // Navega a la Tercera Vista
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.person),
+              title: Text('Usuario'),
+              onTap: () {
+                Navigator.pop(context); // Cierra el Drawer
+                Navigator.pushNamed(
+                    context, '/user'); // Navega a la Tercera Vista
               },
             ),
           ],

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import "Register.dart";
+// import "Register.dart";
 
 class LoginView extends StatelessWidget {
   @override
