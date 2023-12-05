@@ -5,6 +5,7 @@ import 'login.dart';
 import 'Register.dart';
 import 'user.dart';
 import 'Buscador.dart';
+import "cars.dart";
 
 void main() => runApp(const MyApp());
 
@@ -22,7 +23,8 @@ class MyApp extends StatelessWidget {
         '/busqueda': (context) => Buscador(),
         '/login': (context) => LoginView(),
         '/Register': (context) => RegisterView(),
-        '/user': (context) => user()
+        '/user': (context) => user(),
+        '/cars': (context) => CarsView()
       },
     );
   }
@@ -103,6 +105,15 @@ class HomeView extends StatelessWidget {
                   ),
                 ],
               ),
+            ),
+            ListTile(
+              leading: Icon(Icons.car_rental),
+              title: Text('Carros'),
+              onTap: () {
+                Navigator.pop(context); // Cierra el Drawer
+                Navigator.pushNamed(
+                    context, '/cars'); // Navega a la Segunda Vista
+              },
             ),
             ListTile(
               leading: Icon(Icons.search),
