@@ -4,6 +4,7 @@ import 'third_view.dart';
 import 'login.dart';
 import 'Register.dart';
 import 'user.dart';
+import 'Buscador.dart';
 
 void main() => runApp(const MyApp());
 
@@ -17,8 +18,8 @@ class MyApp extends StatelessWidget {
       initialRoute: '/', // Página inicial
       routes: {
         '/': (context) => const HomeView(),
-        '/second': (context) => SecondView(),
         '/third': (context) => ThirdView(),
+        '/busqueda': (context) => Buscador(),
         '/login': (context) => LoginView(),
         '/Register': (context) => RegisterView(),
         '/user': (context) => user()
@@ -109,7 +110,7 @@ class HomeView extends StatelessWidget {
               onTap: () {
                 Navigator.pop(context); // Cierra el Drawer
                 Navigator.pushNamed(
-                    context, '/second'); // Navega a la Segunda Vista
+                    context, '/busqueda'); // Navega a la Segunda Vista
               },
             ),
             ListTile(
