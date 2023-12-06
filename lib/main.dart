@@ -5,7 +5,8 @@ import 'login.dart';
 import 'Register.dart';
 import 'user.dart';
 import 'Buscador.dart';
-import "cars.dart";
+import 'CarsView.dart';
+import 'pagoView.dart';
 
 void main() => runApp(const MyApp());
 
@@ -24,7 +25,8 @@ class MyApp extends StatelessWidget {
         '/login': (context) => LoginView(),
         '/Register': (context) => RegisterView(),
         '/user': (context) => user(),
-        '/cars': (context) => CarsView()
+        '/cars': (context) => CarsView(),
+        '/pago': (context) => PagoView(),
       },
     );
   }
@@ -51,7 +53,7 @@ class HomeView extends StatelessWidget {
           Text(
             'Nissan X-trail 2023',
             style: TextStyle(
-              fontSize: 24, // Esto hace que el texto sea más grande
+              fontSize: 24,
             ),
             textAlign: TextAlign.left,
           ),
@@ -64,7 +66,6 @@ class HomeView extends StatelessWidget {
               Icon(Icons.star_half, color: Colors.yellow),
             ],
           ),
-
           Text(
               'El crédito aprobado por NR Finance Mexico, S.A. de C.V. y Sistema de Crédito Automotriz, S.A. de C.V. (Sicrea)'),
         ],
