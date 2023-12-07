@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:file_picker/file_picker.dart';  
+import 'dart:io';
+import 'dart:convert';
 
 // La clase Car representa un automóvil con sus atributos.
 class Car {
@@ -13,6 +16,15 @@ class Car {
     required this.imagePath,
     required this.description,
   });
+
+  factory Car.fromJson(Map<String, dynamic> json) {
+    return Car(
+      brand: json['brand'],
+      model: json['model'],
+      imagePath: json['imagePath'],
+      description: json['description'],
+    );
+  }
 }
 
 // La pantalla para mostrar los detalles de un automóvil seleccionado.
@@ -116,8 +128,15 @@ class _CarDetailsViewState extends State<CarDetailsView> {
   }
 }
 
+
+class CarsView extends StatefulWidget {
+
+  @override
+  _CarsViewState createState() => _CarsViewState();
+}
+
 // La pantalla principal que muestra una lista de automóviles.
-class CarsView extends StatelessWidget {
+class _CarsViewState extends State<CarsView> {
   final List<Car> cars = [
     Car(
       brand: 'Nissan',
@@ -140,7 +159,31 @@ class CarsView extends StatelessWidget {
     // Agrega más objetos Car según sea necesario
   ];
 
-  @override
+  void _pickFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['json'],
+    );
+
+    if (result != null) {
+      final file = File(result.files.single.path!);
+      String fileContent = await file.readAsString();
+
+      List<dynamic> jsonCars = jsonDecode(fileContent);
+      List<Car> newCars = jsonCars.map((jsonCar) => Car.fromJson(jsonCar)).toList();
+
+      setState(() {
+        cars.addAll(newCars);
+      });
+    }
+  }
+  
+
+
+
+
+
+ @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -149,30 +192,40 @@ class CarsView extends StatelessWidget {
         ),
         backgroundColor: Colors.orange[600],
       ),
-      body: ListView.builder(
-        itemCount: cars.length,
-        itemBuilder: (context, index) {
-          return Card(
-            child: ListTile(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => CarDetailsView(car: cars[index]),
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              itemCount: cars.length,
+              itemBuilder: (context, index) {
+                return Card(
+                  child: ListTile(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CarDetailsView(car: cars[index]),
+                        ),
+                      );
+                    },
+                    leading: Image.network(
+                      cars[index].imagePath,
+                      width: 50,
+                      height: 50,
+                      fit: BoxFit.cover,
+                    ),
+                    title: Text(cars[index].brand),
+                    subtitle: Text(cars[index].model),
                   ),
                 );
               },
-              leading: Image.network(
-                cars[index].imagePath,
-                width: 50,
-                height: 50,
-                fit: BoxFit.cover,
-              ),
-              title: Text(cars[index].brand),
-              subtitle: Text(cars[index].model),
             ),
-          );
-        },
+          ),
+          ElevatedButton(
+            onPressed: _pickFile,
+            child: Text("Cargar autos desde JSON"),
+          ),
+        ],
       ),
     );
   }
